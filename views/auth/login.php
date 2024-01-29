@@ -23,6 +23,7 @@ if (isset($_POST['btn-login'])) {
     padding: 15px;
     margin-top: 2vh !important;
     margin: auto;
+    color: #fff;
   }
 
   .form-signin .checkbox {

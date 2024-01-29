@@ -41,6 +41,7 @@ if (isset($_REQUEST['btn-register'])) {
       padding: 15px;
       margin-top: 2vh !important;
       margin: auto;
+      color: #fff;
     }
 
     .form-signin .checkbox {
@@ -89,7 +90,7 @@ if (isset($_REQUEST['btn-register'])) {
         class="img-fluid"></a>
   </div>
   <form method="POST" name="Register" class="form-signin">
-    <h2 class="mb-3 fw-bolder">User Registration </h1>
+    <h2 class="mb-3 fw-bolder"> Register </h1>
 
       <?php csrf() ?>
 
