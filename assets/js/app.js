@@ -72,27 +72,55 @@ function type(text) {
   scroll()
   disable()
 
-
   let lastConversation = document.querySelector(
     ".conversations .conversation:last-child .message"
   )
   let index = 0
 
- // Create a new DOMParser object
-  const parser = new DOMParser();
-  const parsedText = parser.parseFromString(text, 'text/html').body.textContent;
-
   let typingInterval = setInterval(() => {
-    lastConversation.innerHTML += parsedText[index]
+    lastConversation.innerHTML += text[index]
     scroll()
     index++
-    if (index >= parsedText.length) {
+    if (index >= text.length) {
       clearInterval(typingInterval)
-      lastConversation.innerHTML=lastConversation.innerHTML
+      renderlinks(text);
       enable()
     }
   }, 10);  
 
+}
+
+// render links by parsing anchor tags
+function renderlinks(text){
+
+   let lastConversation = document.querySelector(
+    ".conversations .conversation:last-child .message"
+  )
+
+  // temporary container element
+    var tempDiv = document.createElement('div');
+    tempDiv.innerHTML = text;
+
+    // Select all anchor tags within the container
+    var links = tempDiv.getElementsByTagName('a');
+
+    // visit each anchor tag
+    for (var i = 0; i < links.length; i++) {
+        var link = links[i];
+        var href = link.getAttribute('href');
+        var text = link.textContent;
+
+        // Create a new anchor tag
+        var newLink = document.createElement('a');
+        newLink.setAttribute('href', href);
+        newLink.textContent = text;
+        newLink.target = '_blank'; 
+
+        // Replace the original anchor tag with the new anchor element
+        link.parentNode.replaceChild(newLink, link);
+    }
+
+  lastConversation.innerHTML = tempDiv.innerHTML; // set html to last response div
 }
 
 // Greet the user and initiate the conversation
@@ -290,7 +318,7 @@ send.onclick = async function (e) {
               <div class="message bg-ai"></div>
             </div>
           `
-    errorMsg = "Limit exceeded. Try again after 2 hrs\n"
+    errorMsg = "Limit exceeded. Try again after 2 hrs"
     type(errorMsg)
   }
 }
